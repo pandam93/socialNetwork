@@ -26,3 +26,15 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->state(User::class, 'professor', function ($faker) {
+    return [
+      'rol' => 'professor',
+    ];
+  });
+
+  $factory->state(User::class, 'student', function ($faker) {
+    return [
+      'rol' => 'student',
+    ];
+  });
