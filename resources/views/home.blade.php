@@ -13,14 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <!-- [bepm] BORRAR ESTA PUTA MIERDA, ESTOY PROBANDO -->
-                    @if(Auth::user()->rol == 'student')
-                        Qué pasa cara pasaa! <br>
-                        @elseif(Auth::user()->rol == 'professor')
-                        Muy buenas señor.
-                        @endif
-
+                    
                     You are logged in!!! {{ Auth::user()->name }}
+
+                    @foreach ($users as $user)
+    <p>Usuario: {{ $user->name }}</p>
+@endforeach
                 </div>
             </div>
         </div>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+//use DB;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //$users = DB::table('users')->get();
+        $users = User::all();
+
+        //[pts] Here we have to change it to "users"
+        //return view('home',['user' => $users]);
+        return view('home')->with('user', $users);
+
     }
 }
