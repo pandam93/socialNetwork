@@ -28,15 +28,92 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(User::class, 'professor', function ($faker) {
+$factory->state(User::class, 'professor-1DAW', function ($faker) {
     return [
       'name' => $faker->title('female') .' '. $faker->firstName('female'),
       'rol' => 'professor',
+      'course_id' => '1',
     ];
   });
 
-  $factory->state(User::class, 'student', function ($faker) {
+  $factory->state(User::class, 'student-1DAW', function ($faker) {
     return [
       'rol' => 'student',
+      'course_id' => '1',
+    ];
+  });
+
+  $factory->state(User::class, 'professor-2DAW', function ($faker) {
+    return [
+      'name' => $faker->title('female') .' '. $faker->firstName('female'),
+      'rol' => 'professor',
+      'course_id' => '2',
+    ];
+  });
+
+  $factory->state(User::class, 'student-2DAW', function ($faker) {
+    return [
+      'rol' => 'student',
+      'course_id' => '2',
+    ];
+  });
+
+  $factory->state(User::class, 'professor-1DAM', function ($faker) {
+    return [
+      'name' => $faker->title('female') .' '. $faker->firstName('female'),
+      'rol' => 'professor',
+      'course_id' => '3',
+    ];
+  });
+
+  $factory->state(User::class, 'student-1DAM', function ($faker) {
+    return [
+      'rol' => 'student',
+      'course_id' => '3',
+    ];
+  });
+
+  $factory->state(User::class, 'professor-2DAM', function ($faker) {
+    return [
+      'name' => $faker->title('female') .' '. $faker->firstName('female'),
+      'rol' => 'professor',
+      'course_id' => '4',
+    ];
+  });
+
+  $factory->state(User::class, 'student-2DAM', function ($faker) {
+    return [
+      'rol' => 'student',
+      'course_id' => '4',
+    ];
+  });
+
+  $factory->state(User::class, 'professor-1ASIR', function ($faker) {
+    return [
+      'name' => $faker->title('female') .' '. $faker->firstName('female'),
+      'rol' => 'professor',
+      'course_id' => '5',
+    ];
+  });
+
+  $factory->state(User::class, 'student-1ASIR', function ($faker) {
+    return [
+      'rol' => 'student',
+      'course_id' => '5',
+    ];
+  });
+
+  $factory->state(User::class, 'professor-2ASIR', function ($faker) {
+    return [
+      'name' => $faker->title('female') .' '. $faker->firstName('female'),
+      'rol' => 'professor',
+      'course_id' => '6',
+    ];
+  });
+
+  $factory->state(User::class, 'student-2ASIR', function ($faker) {
+    return [
+      'rol' => 'student',
+      'course_id' => '6',
     ];
   });
