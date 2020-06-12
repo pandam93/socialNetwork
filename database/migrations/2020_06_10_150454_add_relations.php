@@ -23,14 +23,20 @@ class AddRelations extends Migration
             $table->foreign('course_id')->references('id')->on('courses');
         });
 
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->unsignedInteger('signature_id')->nullable();
-            $table->foreign('signature_id')->references('id')->on('signatures');
-        });
+        // Schema::table('tasks', function (Blueprint $table) {
+        //     $table->unsignedInteger('student_id')->nullable();
+        //     $table->foreign('student_id')->references('id')->on('users');
+        //     $table->unsignedInteger('signature_id')->nullable();
+        //     $table->foreign('signature_id')->references('id')->on('signatures');
+        //     $table->unsignedInteger('professor_id')->nullable();
+        //     $table->foreign('professor_id')->references('id')->on('users');
+        // });
 
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedInteger('course_id')->nullable();
             $table->foreign('course_id')->references('id')->on('courses');
+            $table->unsignedInteger('signature_id')->nullable();
+            $table->foreign('signature_id')->references('id')->on('signatures');
 
         });
     }
@@ -57,6 +63,8 @@ class AddRelations extends Migration
         Schema::table('tasks', function (Blueprint $table) {
             $table->dropForeign(['signature_id']);
             $table->dropColumn('signature_id');
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
 
         });
 

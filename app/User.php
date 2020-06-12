@@ -37,13 +37,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function tasks()
+    public function tasksToDo()
     {
-        return $this->hasMany('App\Task');
+        return $this->hasMany('App\Task','student_id');
+    }
+
+    public function taskOrders()
+    {
+        return $this->hasMany('App\Task','professor_id');
     }
 
     public function course()
     {
         return $this->belongsTo('App\Course');
+    }
+
+    public function signatures()
+    {
+        return $this->hasMany('App\Signature');
+    }
+
+    public function messagesRecieve()
+    {
+        return $this->hasMany('App\Message', 'to_id');
+    }
+    
+    public function messagesSent()
+    {
+        return $this->hasMany('App\Message', 'from_id');
     }
 }

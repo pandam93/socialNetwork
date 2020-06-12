@@ -19,39 +19,46 @@
         <div class="col-md-4">
         <h2 class="text-center">Tareas {{Auth::user()->course->name_short}}</h2>
           <ul class="list-group">
-            @foreach ((Auth::user()->course->signatures) as $signature)
+            @foreach (($tasksData) as $task)
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              {{ $signature->name }}
-            <span class="badge badge-primary badge-pill">{{ random_int(0,10) }}</span>
+              {{ $task->name }}
+            <span class="badge badge-primary badge-pill">{{ $task->total }}</span>
             </li>
             @endforeach
           </ul>
       <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
         </div>
+
+
         <div class="col-md-4">
           <h2 class="text-center">Exámenes</h2>
+          <div class="accordion" id="accordionExample">
           <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: red;">
-              Cras justo odio
-              <small class="">03/06/2020</small>
-            </li>
+            @foreach ($examsData as $exam)
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Dapibus ac facilisis in
-              <small class="text-muted">3 days ago</small>
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{$exam->id}}" aria-expanded="true" aria-controls="collapseOne">
+                {{ ucfirst($exam->task_name) }} <br> {{ $exam->signature_name }}
+              </button>
+            <small>{{date_format(date_create($exam->finnished_at),"d/m/y")}}</small>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Morbi leo risus
-              <small class="text-muted">3 days ago</small>
-            </li>
+            <div id="collapse{{ $exam->id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                {{ ucfirst($exam->description) }}
+              </div>
+            </div>
+            @endforeach
           </ul>
+        </div>
       <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
         </div>
+
+
         <div class="col-md-4">
           <h2 class="text-center">Mensajes</h2>
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Sin leer
-              <span class="badge badge-primary badge-pill"> </span>
+            <span class="badge badge-primary badge-pill">{{ $messagesNotRead }}</span>
             </li>
             <div class="list-group">
               <button type="button" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#ModalSend">Enviar Mensaje</button>
@@ -77,8 +84,16 @@
               <form>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Recipient:</label>
-                  <input type="text" class="form-control" id="recipient-name">
-                </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">@</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                      @foreach ($studentsData as $student)
+                    <option value="{{$student->id}}">{{ $student->name ." (". ucfirst($student->rol).")" }}</option>
+                      @endforeach
+                    </select>
+                  </div>                </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Message:</label>
                   <textarea class="form-control" id="message-text"></textarea>
@@ -108,18 +123,20 @@
         <div class="row">
           <div class="col-4">
             <div class="list-group" id="list-tab" role="tablist">
-              <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Pedro</a>
-              <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Sara</a>
-              <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Marta</a>
-              <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Luis</a>
+              @forelse ($form as $item)
+            <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#list-home{{ $item->id }}" role="tab" aria-controls="home">{{ $item->name }}
+              <small class="text-center">{{date_format(date_create($item->time_sent),"d/m/y - H:m")}}</small>
+            </a>
+              @empty
+                  <p>No hay mensajes</p>
+              @endforelse
             </div>
           </div>
           <div class="col-8">
             <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id sapiente nesciunt ab iste pariatur, explicabo ipsum officiis eius maiores officia temporibus atque illo, porro incidunt totam animi dolores repudiandae nam!</div>
-              <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-              <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo fuga tempora possimus ducimus delectus, consequatur non veniam sequi dignissimos? Officia deserunt nam iste modi ullam! Nostrum modi nobis ut dolorem!</div>
-              <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+              @foreach ($form as $item)
+            <div class="tab-pane fade show" id="list-home{{ $item->id }}" role="tabpanel" aria-labelledby="list-home-list">{{ $item->content }}</div>
+              @endforeach
             </div>
           </div>
         </div>

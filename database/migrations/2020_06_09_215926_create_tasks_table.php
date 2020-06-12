@@ -17,9 +17,9 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->string('note')->nullable();
+            $table->enum('rol',['work','exam']);
             $table->timestamps();
-            $table->timestamp('finnished_at', 0)->nullable();
+            $table->timestamp('finnished_at')->nullable();
         });
     }
 

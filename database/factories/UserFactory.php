@@ -33,6 +33,7 @@ $factory->state(User::class, 'professor-1DAW', function ($faker) {
       'name' => $faker->title('female') .' '. $faker->firstName('female'),
       'rol' => 'professor',
       'course_id' => '1',
+      
     ];
   });
 
