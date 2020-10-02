@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Message;
 use Carbon\Carbon;
 
 
@@ -86,5 +87,20 @@ class HomeController extends Controller
             ->with('studentsData', $studentsData)
             ->with('examsData',$examsData)
             ->with('messagesNotRead',$messageNotRead);
+    }
+
+    public function store(Request $request)
+    {
+        $data = request()->all();
+
+        Message::create([
+            'content' => $data['mensaje'],
+            'from_id' => $data['from_id'],
+            'to_id' => $data['destinatario'],
+            'time_sent' => Carbon::now(),
+        ]);
+
+        Route::redirect('/home/create', '/home');
+        
     }
 }

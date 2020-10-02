@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMessagesTable extends Migration
 {
+
+    public $timestamps = false;
+
     /**
      * Run the migrations.
      *
